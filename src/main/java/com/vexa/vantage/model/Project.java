@@ -24,10 +24,21 @@ public class Project {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(length = 50)
+    private String icon;
+
+    @Column(length = 20)
+    private String status = "active";
+
     // El Dueño/Creador del proyecto (Generalmente el Admin o un PO)
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
+
+    // Scrum Master asignado
+    @ManyToOne
+    @JoinColumn(name = "scrum_master_id")
+    private User scrumMaster;
 
     // Los miembros del equipo asignados a este proyecto (PO, SM, Devs)
     @ManyToMany

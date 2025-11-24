@@ -27,16 +27,28 @@ public class ProjectController {
         return projectService.getMyProjects(email);
     }
 
+    // Obtener TODOS los proyectos (para el directorio)
+    @GetMapping("/all")
+    public List<Project> getAllProjects() {
+        return projectService.getAllProjects();
+    }
+
     // Crear un nuevo proyecto
     @PostMapping
-    public ResponseEntity<?> createProject(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> createProject(@RequestBody Map<String, Object> request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String ownerEmail = auth.getName();
 
-        String name = request.get("name");
-        String description = request.get("description");
+        String name = (String) request.get("name");
+        String description = (String) request.get("description");
+        String icon = (String) request.get("icon");
 
-        Project newProject = projectService.createProject(name, description, ownerEmail);
+        Long scrumMasterId = null;
+        if (request.get("scrumMasterId") != null) {
+            scrumMasterId = Long.valueOf(request.get("scrumMasterId").toString());
+        }
+
+        Project newProject = projectService.createProject(name, description, ownerEmail, icon, scrumMasterId);
         return ResponseEntity.ok(newProject);
     }
 

@@ -19,11 +19,19 @@ public class ProjectService {
     private UserRepository userRepository;
 
     // Crear un nuevo proyecto
-    public Project createProject(String name, String description, String ownerEmail) {
+    public Project createProject(String name, String description, String ownerEmail, String icon, Long scrumMasterId) {
         User owner = userRepository.findByEmail(ownerEmail)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         Project project = new Project(name, description, owner);
+        project.setIcon(icon);
+
+        if (scrumMasterId != null) {
+            User scrumMaster = userRepository.findById(scrumMasterId)
+                    .orElseThrow(() -> new RuntimeException("Scrum Master no encontrado"));
+            project.setScrumMaster(scrumMaster);
+            project.getMembers().add(scrumMaster);
+        }
 
         // El dueño es automáticamente miembro del equipo
         project.getMembers().add(owner);
@@ -36,6 +44,11 @@ public class ProjectService {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         return projectRepository.findByMembersContaining(user);
+    }
+
+    // Obtener TODOS los proyectos (para el directorio)
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
     }
 
     // Buscar por ID

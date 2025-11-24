@@ -8,7 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import com.vexa.vantage.model.RoleType;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -111,5 +114,27 @@ public class UserController {
                     return ResponseEntity.ok(Map.of("message", "Contraseña actualizada correctamente"));
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/role/{roleName}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getUsersByRole(@PathVariable String roleName) {
+        try {
+            // Asumimos que el frontend envía "ROLE_SM", "ROLE_PO", etc.
+            RoleType roleType = RoleType.valueOf(roleName);
+            List<User> users = userRepository.findByRoles_Name(roleType);
+
+            // Mapear a una respuesta simple para no devolver password ni datos sensibles
+            List<Map<String, Object>> userDtos = users.stream()
+                    .map(u -> Map.<String, Object>of(
+                            "id", u.getId(),
+                            "email", u.getEmail(),
+                            "fullName", u.getFullName()))
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(userDtos);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Rol no válido"));
+        }
     }
 }
