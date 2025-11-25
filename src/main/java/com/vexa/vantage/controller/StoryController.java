@@ -3,8 +3,10 @@ package com.vexa.vantage.controller;
 import com.vexa.vantage.model.Project;
 import com.vexa.vantage.model.Story;
 import com.vexa.vantage.model.User;
+import com.vexa.vantage.model.Epic;
 import com.vexa.vantage.repository.ProjectRepository;
 import com.vexa.vantage.repository.UserRepository;
+import com.vexa.vantage.repository.EpicRepository;
 import com.vexa.vantage.service.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,13 @@ public class StoryController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EpicRepository epicRepository;
+
     // Crear Historia
     @PostMapping
     public ResponseEntity<?> createStory(@RequestBody StoryRequest request) {
+        System.out.println("Creating story for Epic ID: " + request.getEpicId());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
         User currentUser = userRepository.findByEmail(email).orElseThrow();
@@ -48,15 +54,35 @@ public class StoryController {
         story.setProject(project);
         story.setReporter(currentUser); // Quien la crea es el reporter
 
+        // Set Epic if provided
+        if (request.getEpicId() != null) {
+            Epic epic = epicRepository.findById(request.getEpicId())
+                    .orElseThrow(() -> new RuntimeException("Epic no encontrado"));
+            story.setEpic(epic);
+        } else {
+            throw new RuntimeException("La historia debe pertenecer a una épica.");
+        }
+
         Story createdStory = storyService.createStory(story);
+        System.out.println(
+                "Story created with ID: " + createdStory.getId() + ", Number: " + createdStory.getStoryNumber());
         return ResponseEntity.ok(createdStory);
     }
 
     // OBTENER BACKLOG PRIORIZADO (La Joya de la Corona 👑)
     @GetMapping("/backlog/{projectId}")
     public List<Story> getBacklog(@PathVariable Long projectId) {
-        // Esto devuelve la lista ya ordenada por la fórmula matemática
         return storyService.getPrioritizedBacklog(projectId);
+    }
+
+    // Get Stories by Epic
+    @GetMapping("/epic/{epicId}")
+    public List<Story> getStoriesByEpic(@PathVariable Long epicId) {
+        System.out.println("Fetching stories for Epic ID: " + epicId);
+        List<Story> stories = storyService.getStoriesByEpic(epicId);
+        System.out.println("Found " + stories.size() + " stories.");
+        stories.forEach(s -> System.out.println(" - Story " + s.getStoryNumber() + ": " + s.getTitle()));
+        return stories;
     }
 
     // Actualizar Puntos (Planning Poker)
@@ -75,4 +101,5 @@ class StoryRequest {
     private Integer urgency;
     private Integer storyPoints;
     private Long projectId;
+    private Long epicId;
 }

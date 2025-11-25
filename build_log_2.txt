@@ -1,0 +1,23 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.vexa:vantage >--------------------------
+[INFO] Building vantage 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ vantage ---
+[INFO] Deleting C:\Users\rober\Desktop\ProyectoVantage\VantageBackend\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ vantage ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ vantage ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 35 source files with javac [debug parameters release 21] to target\classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.043 s
+[INFO] Finished at: 2025-11-25T11:33:40-05:00
+[INFO] ------------------------------------------------------------------------

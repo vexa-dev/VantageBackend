@@ -1,0 +1,66 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.vexa:vantage >--------------------------
+[INFO] Building vantage 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ vantage ---
+[INFO] Deleting C:\Users\rober\Desktop\ProyectoVantage\VantageBackend\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ vantage ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ vantage ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 35 source files with javac [debug parameters release 21] to target\classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[53,14] cannot find symbol
+  symbol:   method setProject(com.vexa.vantage.model.Project)
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[60,18] cannot find symbol
+  symbol:   method setEpic(com.vexa.vantage.model.Epic)
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[23,18] cannot find symbol
+  symbol:   method getEpic()
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[28,74] cannot find symbol
+  symbol:   method getEpic()
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[29,14] cannot find symbol
+  symbol:   method setStoryNumber(long)
+  location: variable story of type com.vexa.vantage.model.Story
+[INFO] 5 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.566 s
+[INFO] Finished at: 2025-11-25T11:37:11-05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project vantage: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[53,14] cannot find symbol
+[ERROR]   symbol:   method setProject(com.vexa.vantage.model.Project)
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[60,18] cannot find symbol
+[ERROR]   symbol:   method setEpic(com.vexa.vantage.model.Epic)
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[23,18] cannot find symbol
+[ERROR]   symbol:   method getEpic()
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[28,74] cannot find symbol
+[ERROR]   symbol:   method getEpic()
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[29,14] cannot find symbol
+[ERROR]   symbol:   method setStoryNumber(long)
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

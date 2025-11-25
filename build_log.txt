@@ -1,0 +1,414 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.vexa:vantage >--------------------------
+[INFO] Building vantage 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ vantage ---
+[INFO] Deleting C:\Users\rober\Desktop\ProyectoVantage\VantageBackend\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ vantage ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ vantage ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 35 source files with javac [debug parameters release 21] to target\classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[49,69] cannot find symbol
+  symbol:   method getEmail()
+  location: variable loginRequest of type com.vexa.vantage.controller.LoginRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[49,94] cannot find symbol
+  symbol:   method getPassword()
+  location: variable loginRequest of type com.vexa.vantage.controller.LoginRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[59,34] constructor JwtResponse in class com.vexa.vantage.controller.JwtResponse cannot be applied to given types;
+  required: no arguments
+  found:    java.lang.String,java.lang.Long,java.lang.String,java.util.List<java.lang.String>
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[68,55] cannot find symbol
+  symbol:   method getEmail()
+  location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[71,27] constructor MessageResponse in class com.vexa.vantage.controller.MessageResponse cannot be applied to given types;
+  required: no arguments
+  found:    java.lang.String
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[75,43] cannot find symbol
+  symbol:   method getFullName()
+  location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[76,30] cannot find symbol
+  symbol:   method getEmail()
+  location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[77,45] cannot find symbol
+  symbol:   method getPassword()
+  location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[79,45] cannot find symbol
+  symbol:   method getRole()
+  location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[112,13] cannot find symbol
+  symbol:   method setRoles(java.util.Set<com.vexa.vantage.model.Role>)
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[115,34] constructor MessageResponse in class com.vexa.vantage.controller.MessageResponse cannot be applied to given types;
+  required: no arguments
+  found:    java.lang.String
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/EpicController.java:[22,30] cannot find symbol
+  symbol:   method getTitle()
+  location: variable request of type com.vexa.vantage.controller.EpicRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/EpicController.java:[23,36] cannot find symbol
+  symbol:   method getDescription()
+  location: variable request of type com.vexa.vantage.controller.EpicRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/EpicController.java:[25,70] cannot find symbol
+  symbol:   method getProjectId()
+  location: variable request of type com.vexa.vantage.controller.EpicRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/EpicService.java:[25,13] cannot find symbol
+  symbol:   method setProject(com.vexa.vantage.model.Project)
+  location: variable epic of type com.vexa.vantage.model.Epic
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/EpicService.java:[29,13] cannot find symbol
+  symbol:   method setEpicNumber(long)
+  location: variable epic of type com.vexa.vantage.model.Epic
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[27,16] cannot find symbol
+  symbol:   method setIcon(java.lang.String)
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[32,20] cannot find symbol
+  symbol:   method setScrumMaster(com.vexa.vantage.model.User)
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[33,20] cannot find symbol
+  symbol:   method getMembers()
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[37,16] cannot find symbol
+  symbol:   method getMembers()
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[64,29] cannot find symbol
+  symbol:   method getOwner()
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[65,35] cannot find symbol
+  symbol:   method getScrumMaster()
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[68,16] cannot find symbol
+  symbol:   method getMembers()
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[72,20] cannot find symbol
+  symbol:   method getMembers()
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[74,20] cannot find symbol
+  symbol:   method getMembers()
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[78,16] cannot find symbol
+  symbol:   method getMembers()
+  location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[33,31] cannot find symbol
+  symbol:   method getName()
+  location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[34,31] cannot find symbol
+  symbol:   method getGoal()
+  location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[35,36] cannot find symbol
+  symbol:   method getStartDate()
+  location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[36,34] cannot find symbol
+  symbol:   method getEndDate()
+  location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[38,61] cannot find symbol
+  symbol:   method getProjectId()
+  location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[43,61] cannot find symbol
+  symbol:   method getProjectId()
+  location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[47,31] cannot find symbol
+  symbol:   method getTitle()
+  location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[48,37] cannot find symbol
+  symbol:   method getDescription()
+  location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[49,39] cannot find symbol
+  symbol:   method getBusinessValue()
+  location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[50,33] cannot find symbol
+  symbol:   method getUrgency()
+  location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[51,37] cannot find symbol
+  symbol:   method getStoryPoints()
+  location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[53,14] cannot find symbol
+  symbol:   method setProject(com.vexa.vantage.model.Project)
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[54,14] cannot find symbol
+  symbol:   method setReporter(com.vexa.vantage.model.User)
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[57,20] cannot find symbol
+  symbol:   method getEpicId()
+  location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[58,56] cannot find symbol
+  symbol:   method getEpicId()
+  location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[60,18] cannot find symbol
+  symbol:   method setEpic(com.vexa.vantage.model.Epic)
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[23,18] cannot find symbol
+  symbol:   method getEpic()
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[28,74] cannot find symbol
+  symbol:   method getEpic()
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[29,14] cannot find symbol
+  symbol:   method setStoryNumber(long)
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[56,14] cannot find symbol
+  symbol:   method setStoryPoints(java.lang.Integer)
+  location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[77,29] cannot find symbol
+  symbol:   method setFullName(java.lang.String)
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[82,38] cannot find symbol
+  symbol:   method getEmail()
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[86,29] cannot find symbol
+  symbol:   method setEmail(java.lang.String)
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[92,54] cannot find symbol
+  symbol:   method getId()
+  location: variable updatedUser of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[93,60] cannot find symbol
+  symbol:   method getFullName()
+  location: variable updatedUser of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[94,57] cannot find symbol
+  symbol:   method getEmail()
+  location: variable updatedUser of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[105,84] cannot find symbol
+  symbol:   method getPassword()
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[111,25] cannot find symbol
+  symbol:   method setPassword(java.lang.String)
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[130,36] cannot find symbol
+  symbol:   method getId()
+  location: variable u of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[131,39] cannot find symbol
+  symbol:   method getEmail()
+  location: variable u of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[132,42] cannot find symbol
+  symbol:   method getFullName()
+  location: variable u of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[133,29] incompatible types: inference variable T has incompatible bounds
+    equality constraints: java.util.Map<java.lang.String,java.lang.Object>
+    lower bounds: java.lang.Object
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/security/UserDetailsImpl.java:[36,50] cannot find symbol
+  symbol:   method getRoles()
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/security/UserDetailsImpl.java:[41,21] cannot find symbol
+  symbol:   method getId()
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/security/UserDetailsImpl.java:[42,21] cannot find symbol
+  symbol:   method getEmail()
+  location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/security/UserDetailsImpl.java:[43,21] cannot find symbol
+  symbol:   method getPassword()
+  location: variable user of type com.vexa.vantage.model.User
+[INFO] 62 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.036 s
+[INFO] Finished at: 2025-11-25T11:31:34-05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project vantage: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[49,69] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable loginRequest of type com.vexa.vantage.controller.LoginRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[49,94] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable loginRequest of type com.vexa.vantage.controller.LoginRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[59,34] constructor JwtResponse in class com.vexa.vantage.controller.JwtResponse cannot be applied to given types;
+[ERROR]   required: no arguments
+[ERROR]   found:    java.lang.String,java.lang.Long,java.lang.String,java.util.List<java.lang.String>
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[68,55] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[71,27] constructor MessageResponse in class com.vexa.vantage.controller.MessageResponse cannot be applied to given types;
+[ERROR]   required: no arguments
+[ERROR]   found:    java.lang.String
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[75,43] cannot find symbol
+[ERROR]   symbol:   method getFullName()
+[ERROR]   location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[76,30] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[77,45] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[79,45] cannot find symbol
+[ERROR]   symbol:   method getRole()
+[ERROR]   location: variable signUpRequest of type com.vexa.vantage.controller.SignupRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[112,13] cannot find symbol
+[ERROR]   symbol:   method setRoles(java.util.Set<com.vexa.vantage.model.Role>)
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/AuthController.java:[115,34] constructor MessageResponse in class com.vexa.vantage.controller.MessageResponse cannot be applied to given types;
+[ERROR]   required: no arguments
+[ERROR]   found:    java.lang.String
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/EpicController.java:[22,30] cannot find symbol
+[ERROR]   symbol:   method getTitle()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.EpicRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/EpicController.java:[23,36] cannot find symbol
+[ERROR]   symbol:   method getDescription()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.EpicRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/EpicController.java:[25,70] cannot find symbol
+[ERROR]   symbol:   method getProjectId()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.EpicRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/EpicService.java:[25,13] cannot find symbol
+[ERROR]   symbol:   method setProject(com.vexa.vantage.model.Project)
+[ERROR]   location: variable epic of type com.vexa.vantage.model.Epic
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/EpicService.java:[29,13] cannot find symbol
+[ERROR]   symbol:   method setEpicNumber(long)
+[ERROR]   location: variable epic of type com.vexa.vantage.model.Epic
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[27,16] cannot find symbol
+[ERROR]   symbol:   method setIcon(java.lang.String)
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[32,20] cannot find symbol
+[ERROR]   symbol:   method setScrumMaster(com.vexa.vantage.model.User)
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[33,20] cannot find symbol
+[ERROR]   symbol:   method getMembers()
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[37,16] cannot find symbol
+[ERROR]   symbol:   method getMembers()
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[64,29] cannot find symbol
+[ERROR]   symbol:   method getOwner()
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[65,35] cannot find symbol
+[ERROR]   symbol:   method getScrumMaster()
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[68,16] cannot find symbol
+[ERROR]   symbol:   method getMembers()
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[72,20] cannot find symbol
+[ERROR]   symbol:   method getMembers()
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[74,20] cannot find symbol
+[ERROR]   symbol:   method getMembers()
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/ProjectService.java:[78,16] cannot find symbol
+[ERROR]   symbol:   method getMembers()
+[ERROR]   location: variable project of type com.vexa.vantage.model.Project
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[33,31] cannot find symbol
+[ERROR]   symbol:   method getName()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[34,31] cannot find symbol
+[ERROR]   symbol:   method getGoal()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[35,36] cannot find symbol
+[ERROR]   symbol:   method getStartDate()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[36,34] cannot find symbol
+[ERROR]   symbol:   method getEndDate()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/SprintController.java:[38,61] cannot find symbol
+[ERROR]   symbol:   method getProjectId()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.SprintRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[43,61] cannot find symbol
+[ERROR]   symbol:   method getProjectId()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[47,31] cannot find symbol
+[ERROR]   symbol:   method getTitle()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[48,37] cannot find symbol
+[ERROR]   symbol:   method getDescription()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[49,39] cannot find symbol
+[ERROR]   symbol:   method getBusinessValue()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[50,33] cannot find symbol
+[ERROR]   symbol:   method getUrgency()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[51,37] cannot find symbol
+[ERROR]   symbol:   method getStoryPoints()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[53,14] cannot find symbol
+[ERROR]   symbol:   method setProject(com.vexa.vantage.model.Project)
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[54,14] cannot find symbol
+[ERROR]   symbol:   method setReporter(com.vexa.vantage.model.User)
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[57,20] cannot find symbol
+[ERROR]   symbol:   method getEpicId()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[58,56] cannot find symbol
+[ERROR]   symbol:   method getEpicId()
+[ERROR]   location: variable request of type com.vexa.vantage.controller.StoryRequest
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/StoryController.java:[60,18] cannot find symbol
+[ERROR]   symbol:   method setEpic(com.vexa.vantage.model.Epic)
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[23,18] cannot find symbol
+[ERROR]   symbol:   method getEpic()
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[28,74] cannot find symbol
+[ERROR]   symbol:   method getEpic()
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[29,14] cannot find symbol
+[ERROR]   symbol:   method setStoryNumber(long)
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/service/StoryService.java:[56,14] cannot find symbol
+[ERROR]   symbol:   method setStoryPoints(java.lang.Integer)
+[ERROR]   location: variable story of type com.vexa.vantage.model.Story
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[77,29] cannot find symbol
+[ERROR]   symbol:   method setFullName(java.lang.String)
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[82,38] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[86,29] cannot find symbol
+[ERROR]   symbol:   method setEmail(java.lang.String)
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[92,54] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable updatedUser of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[93,60] cannot find symbol
+[ERROR]   symbol:   method getFullName()
+[ERROR]   location: variable updatedUser of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[94,57] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable updatedUser of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[105,84] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[111,25] cannot find symbol
+[ERROR]   symbol:   method setPassword(java.lang.String)
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[130,36] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable u of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[131,39] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable u of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[132,42] cannot find symbol
+[ERROR]   symbol:   method getFullName()
+[ERROR]   location: variable u of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/controller/UserController.java:[133,29] incompatible types: inference variable T has incompatible bounds
+[ERROR]     equality constraints: java.util.Map<java.lang.String,java.lang.Object>
+[ERROR]     lower bounds: java.lang.Object
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/security/UserDetailsImpl.java:[36,50] cannot find symbol
+[ERROR]   symbol:   method getRoles()
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/security/UserDetailsImpl.java:[41,21] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/security/UserDetailsImpl.java:[42,21] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] /C:/Users/rober/Desktop/ProyectoVantage/VantageBackend/src/main/java/com/vexa/vantage/security/UserDetailsImpl.java:[43,21] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable user of type com.vexa.vantage.model.User
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

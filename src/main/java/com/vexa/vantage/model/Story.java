@@ -52,6 +52,13 @@ public class Story {
     private Project project;
 
     @ManyToOne
+    @JoinColumn(name = "epic_id", nullable = false) // Mandatory
+    private Epic epic;
+
+    @Column(nullable = false)
+    private Long storyNumber; // Number within the Epic
+
+    @ManyToOne
     @JoinColumn(name = "sprint_id") // Puede ser NULL (Backlog)
     private Sprint sprint;
 
