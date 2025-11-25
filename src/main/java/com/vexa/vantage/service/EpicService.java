@@ -39,4 +39,16 @@ public class EpicService {
         return epicRepository.findById(epicId)
                 .orElseThrow(() -> new RuntimeException("Epic not found"));
     }
+
+    public Epic updateEpic(Long id, Epic epicDetails) {
+        Epic epic = getEpicById(id);
+        epic.setTitle(epicDetails.getTitle());
+        epic.setDescription(epicDetails.getDescription());
+        return epicRepository.save(epic);
+    }
+
+    public void deleteEpic(Long id) {
+        Epic epic = getEpicById(id);
+        epicRepository.delete(epic);
+    }
 }

@@ -90,6 +90,23 @@ public class StoryController {
     public ResponseEntity<?> updatePoints(@PathVariable Long id, @RequestBody Integer points) {
         return ResponseEntity.ok(storyService.updateStoryPoints(id, points));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateStory(@PathVariable Long id, @RequestBody StoryRequest request) {
+        Story storyDetails = new Story();
+        storyDetails.setTitle(request.getTitle());
+        storyDetails.setDescription(request.getDescription());
+        storyDetails.setBusinessValue(request.getBusinessValue());
+        storyDetails.setUrgency(request.getUrgency());
+        storyDetails.setStoryPoints(request.getStoryPoints());
+        return ResponseEntity.ok(storyService.updateStory(id, storyDetails));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteStory(@PathVariable Long id) {
+        storyService.deleteStory(id);
+        return ResponseEntity.ok("Story deleted successfully");
+    }
 }
 
 // DTO simple para recibir datos limpios

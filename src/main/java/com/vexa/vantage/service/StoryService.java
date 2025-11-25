@@ -57,4 +57,19 @@ public class StoryService {
         // Al guardar, el @PreUpdate de la entidad recalcula el Score
         return storyRepository.save(story);
     }
+
+    public Story updateStory(Long id, Story storyDetails) {
+        Story story = storyRepository.findById(id).orElseThrow(() -> new RuntimeException("Story not found"));
+        story.setTitle(storyDetails.getTitle());
+        story.setDescription(storyDetails.getDescription());
+        story.setBusinessValue(storyDetails.getBusinessValue());
+        story.setUrgency(storyDetails.getUrgency());
+        story.setStoryPoints(storyDetails.getStoryPoints());
+        return storyRepository.save(story);
+    }
+
+    public void deleteStory(Long id) {
+        Story story = storyRepository.findById(id).orElseThrow(() -> new RuntimeException("Story not found"));
+        storyRepository.delete(story);
+    }
 }

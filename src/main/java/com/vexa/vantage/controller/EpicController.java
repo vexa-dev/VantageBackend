@@ -29,6 +29,20 @@ public class EpicController {
     public List<Epic> getEpicsByProject(@PathVariable Long projectId) {
         return epicService.getEpicsByProject(projectId);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEpic(@PathVariable Long id, @RequestBody EpicRequest request) {
+        Epic epicDetails = new Epic();
+        epicDetails.setTitle(request.getTitle());
+        epicDetails.setDescription(request.getDescription());
+        return ResponseEntity.ok(epicService.updateEpic(id, epicDetails));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEpic(@PathVariable Long id) {
+        epicService.deleteEpic(id);
+        return ResponseEntity.ok("Epic deleted successfully");
+    }
 }
 
 @lombok.Data
