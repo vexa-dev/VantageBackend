@@ -37,6 +37,16 @@ public class IssueController {
         return ResponseEntity.ok(issueService.getPotentialAssignees(storyId));
     }
 
+    @GetMapping("/project/{projectId}/unassigned")
+    public ResponseEntity<?> getUnassignedIssues(@PathVariable Long projectId) {
+        return ResponseEntity.ok(issueService.getUnassignedIssues(projectId));
+    }
+
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<?> getIssuesByProject(@PathVariable Long projectId) {
+        return ResponseEntity.ok(issueService.getIssuesByProject(projectId));
+    }
+
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createIssue(@RequestBody IssueRequest request) {

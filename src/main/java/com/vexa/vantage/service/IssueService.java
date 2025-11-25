@@ -51,4 +51,12 @@ public class IssueService {
     public void deleteIssue(Long id) {
         issueRepository.deleteById(id);
     }
+
+    public List<Issue> getUnassignedIssues(Long projectId) {
+        return issueRepository.findUnassignedIssuesByProjectId(projectId);
+    }
+
+    public List<Issue> getIssuesByProject(Long projectId) {
+        return issueRepository.findByProjectId(projectId);
+    }
 }

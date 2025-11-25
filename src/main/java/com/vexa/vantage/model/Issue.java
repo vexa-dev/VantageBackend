@@ -38,6 +38,10 @@ public class Issue {
     @JoinColumn(name = "story_id", nullable = false)
     private Story story;
 
+    @ManyToOne
+    @JoinColumn(name = "sprint_id")
+    private Sprint sprint;
+
     @ManyToMany
     @JoinTable(name = "issue_assignees", joinColumns = @JoinColumn(name = "issue_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> assignees = new HashSet<>();

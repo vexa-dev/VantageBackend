@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -33,4 +34,8 @@ public class Sprint {
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
+
+    @OneToMany(mappedBy = "sprint")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("sprint")
+    private List<Issue> issues;
 }
