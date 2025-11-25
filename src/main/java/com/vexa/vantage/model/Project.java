@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +30,12 @@ public class Project {
 
     @Column(length = 20)
     private String status = "active";
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
     // El Dueño/Creador del proyecto (Generalmente el Admin o un PO)
     @ManyToOne

@@ -43,12 +43,23 @@ public class ProjectController {
         String description = (String) request.get("description");
         String icon = (String) request.get("icon");
 
+        java.time.LocalDate startDate = null;
+        if (request.get("startDate") != null) {
+            startDate = java.time.LocalDate.parse((String) request.get("startDate"));
+        }
+
+        java.time.LocalDate endDate = null;
+        if (request.get("endDate") != null) {
+            endDate = java.time.LocalDate.parse((String) request.get("endDate"));
+        }
+
         Long scrumMasterId = null;
         if (request.get("scrumMasterId") != null) {
             scrumMasterId = Long.valueOf(request.get("scrumMasterId").toString());
         }
 
-        Project newProject = projectService.createProject(name, description, ownerEmail, icon, scrumMasterId);
+        Project newProject = projectService.createProject(name, description, ownerEmail, icon, scrumMasterId, startDate,
+                endDate);
         return ResponseEntity.ok(newProject);
     }
 
@@ -56,6 +67,11 @@ public class ProjectController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getProject(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.findById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProject(@PathVariable Long id, @RequestBody Project projectDetails) {
+        return ResponseEntity.ok(projectService.updateProject(id, projectDetails));
     }
 
     @PutMapping("/{id}/members")

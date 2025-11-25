@@ -7,6 +7,7 @@ import com.vexa.vantage.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -19,12 +20,15 @@ public class ProjectService {
     private UserRepository userRepository;
 
     // Crear un nuevo proyecto
-    public Project createProject(String name, String description, String ownerEmail, String icon, Long scrumMasterId) {
+    public Project createProject(String name, String description, String ownerEmail, String icon, Long scrumMasterId,
+            LocalDate startDate, LocalDate endDate) {
         User owner = userRepository.findByEmail(ownerEmail)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         Project project = new Project(name, description, owner);
         project.setIcon(icon);
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
 
         if (scrumMasterId != null) {
             User scrumMaster = userRepository.findById(scrumMasterId)
@@ -76,6 +80,23 @@ public class ProjectService {
         // Agregar los nuevos desarrolladores seleccionados
         List<User> users = userRepository.findAllById(userIds);
         project.getMembers().addAll(users);
+
+        return projectRepository.save(project);
+    }
+
+    public Project updateProject(Long id, Project projectDetails) {
+        Project project = findById(id);
+        project.setName(projectDetails.getName());
+        project.setDescription(projectDetails.getDescription());
+        project.setIcon(projectDetails.getIcon());
+        project.setStartDate(projectDetails.getStartDate());
+        project.setEndDate(projectDetails.getEndDate());
+        project.setStatus(projectDetails.getStatus());
+
+        if (projectDetails.getScrumMaster() != null) {
+            project.setScrumMaster(projectDetails.getScrumMaster());
+            project.getMembers().add(projectDetails.getScrumMaster());
+        }
 
         return projectRepository.save(project);
     }

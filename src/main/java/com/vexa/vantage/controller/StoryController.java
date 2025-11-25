@@ -1,9 +1,9 @@
 package com.vexa.vantage.controller;
 
-import com.vexa.vantage.model.Project;
+import com.vexa.vantage.model.Epic;
 import com.vexa.vantage.model.Story;
 import com.vexa.vantage.model.User;
-import com.vexa.vantage.model.Epic;
+import com.vexa.vantage.model.Project;
 import com.vexa.vantage.repository.ProjectRepository;
 import com.vexa.vantage.repository.UserRepository;
 import com.vexa.vantage.repository.EpicRepository;
@@ -50,6 +50,7 @@ public class StoryController {
         story.setBusinessValue(request.getBusinessValue());
         story.setUrgency(request.getUrgency());
         story.setStoryPoints(request.getStoryPoints());
+        story.setAcceptanceCriteria(request.getAcceptanceCriteria());
 
         story.setProject(project);
         story.setReporter(currentUser); // Quien la crea es el reporter
@@ -99,6 +100,7 @@ public class StoryController {
         storyDetails.setBusinessValue(request.getBusinessValue());
         storyDetails.setUrgency(request.getUrgency());
         storyDetails.setStoryPoints(request.getStoryPoints());
+        storyDetails.setAcceptanceCriteria(request.getAcceptanceCriteria());
         return ResponseEntity.ok(storyService.updateStory(id, storyDetails));
     }
 
@@ -119,4 +121,5 @@ class StoryRequest {
     private Integer storyPoints;
     private Long projectId;
     private Long epicId;
+    private List<String> acceptanceCriteria;
 }

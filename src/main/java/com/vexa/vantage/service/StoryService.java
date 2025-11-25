@@ -65,6 +65,13 @@ public class StoryService {
         story.setBusinessValue(storyDetails.getBusinessValue());
         story.setUrgency(storyDetails.getUrgency());
         story.setStoryPoints(storyDetails.getStoryPoints());
+
+        // Update acceptance criteria
+        if (storyDetails.getAcceptanceCriteria() != null) {
+            story.getAcceptanceCriteria().clear();
+            story.getAcceptanceCriteria().addAll(storyDetails.getAcceptanceCriteria());
+        }
+
         return storyRepository.save(story);
     }
 

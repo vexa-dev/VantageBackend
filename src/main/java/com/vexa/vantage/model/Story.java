@@ -52,36 +52,34 @@ public class Story {
     private Project project;
 
     @ManyToOne
-    @JoinColumn(name = "epic_id", nullable = false) // Mandatory
+    @JoinColumn(name = "epic_id")
     private Epic epic;
 
-    @Column(nullable = false)
-    private Long storyNumber; // Number within the Epic
-
     @ManyToOne
-    @JoinColumn(name = "sprint_id") // Puede ser NULL (Backlog)
+    @JoinColumn(name = "sprint_id")
     private Sprint sprint;
 
     @ManyToOne
-    @JoinColumn(name = "reporter_id") // Quien crea la historia (PO)
+    @JoinColumn(name = "reporter_id")
     private User reporter;
 
     @ManyToOne
-    @JoinColumn(name = "assignee_id") // Quien la desarrolla (Dev)
+    @JoinColumn(name = "assignee_id")
     private User assignee;
 
-    // Lista de comentarios asociados a esta historia
-    // "orphanRemoval = true" significa que si borras la historia, se borran sus
-    // comentarios
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    @ElementCollection
+    @CollectionTable(name = "story_acceptance_criteria", joinColumns = @JoinColumn(name = "story_id"))
+    @Column(name = "criteria")
+    private List<String> acceptanceCriteria = new ArrayList<>();
 
-    // ==========================================
-    // LÓGICA AUTOMÁTICA
-    // ==========================================
+    @Column(nullable = false)
+    private Long storyNumber;
+
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
