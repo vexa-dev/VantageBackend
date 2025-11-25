@@ -79,4 +79,8 @@ public class StoryService {
         Story story = storyRepository.findById(id).orElseThrow(() -> new RuntimeException("Story not found"));
         storyRepository.delete(story);
     }
+
+    public Story getStoryById(Long id) {
+        return storyRepository.findById(id).orElseThrow(() -> new RuntimeException("Story not found"));
+    }
 }

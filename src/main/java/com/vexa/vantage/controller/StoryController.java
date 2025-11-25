@@ -86,6 +86,13 @@ public class StoryController {
         return stories;
     }
 
+    // Get Story by ID with full details
+    @GetMapping("/{id}")
+    public ResponseEntity<Story> getStoryById(@PathVariable Long id) {
+        Story story = storyService.getStoryById(id);
+        return ResponseEntity.ok(story);
+    }
+
     // Actualizar Puntos (Planning Poker)
     @PatchMapping("/{id}/points")
     public ResponseEntity<?> updatePoints(@PathVariable Long id, @RequestBody Integer points) {
