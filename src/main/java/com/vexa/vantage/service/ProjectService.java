@@ -56,4 +56,27 @@ public class ProjectService {
         return projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
     }
+
+    public Project updateMembers(Long projectId, List<Long> userIds) {
+        Project project = findById(projectId);
+
+        // Mantener PO y SM
+        User owner = project.getOwner();
+        User scrumMaster = project.getScrumMaster();
+
+        // Limpiar miembros actuales
+        project.getMembers().clear();
+
+        // Re-agregar PO y SM
+        if (owner != null)
+            project.getMembers().add(owner);
+        if (scrumMaster != null)
+            project.getMembers().add(scrumMaster);
+
+        // Agregar los nuevos desarrolladores seleccionados
+        List<User> users = userRepository.findAllById(userIds);
+        project.getMembers().addAll(users);
+
+        return projectRepository.save(project);
+    }
 }

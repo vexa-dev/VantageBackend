@@ -57,4 +57,9 @@ public class ProjectController {
     public ResponseEntity<?> getProject(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.findById(id));
     }
+
+    @PutMapping("/{id}/members")
+    public ResponseEntity<?> updateMembers(@PathVariable Long id, @RequestBody List<Long> userIds) {
+        return ResponseEntity.ok(projectService.updateMembers(id, userIds));
+    }
 }
