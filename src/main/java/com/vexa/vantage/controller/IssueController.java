@@ -87,6 +87,18 @@ public class IssueController {
         return ResponseEntity.ok(issueService.updateIssue(id, issueDetails));
     }
 
+    @PatchMapping("/{id}/status")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> updateIssueStatus(@PathVariable Long id,
+            @RequestBody java.util.Map<String, String> statusUpdate) {
+        try {
+            IssueStatus status = IssueStatus.valueOf(statusUpdate.get("status"));
+            return ResponseEntity.ok(issueService.updateIssueStatus(id, status));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Estado inválido");
+        }
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('SM') or hasRole('SCRUM_MASTER')")
     public ResponseEntity<?> deleteIssue(@PathVariable Long id) {

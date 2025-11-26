@@ -31,6 +31,14 @@ public class SprintController {
         return sprintRepository.findByProjectId(projectId);
     }
 
+    // Obtener Sprint por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getSprintById(@PathVariable Long id) {
+        Sprint sprint = sprintRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sprint no encontrado"));
+        return ResponseEntity.ok(sprint);
+    }
+
     // Crear Sprint
     @PostMapping
     public ResponseEntity<?> createSprint(@RequestBody SprintRequest request) {

@@ -48,6 +48,13 @@ public class IssueService {
         return issueRepository.save(issue);
     }
 
+    public Issue updateIssueStatus(Long id, com.vexa.vantage.model.IssueStatus status) {
+        Issue issue = issueRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Issue no encontrado"));
+        issue.setStatus(status);
+        return issueRepository.save(issue);
+    }
+
     public void deleteIssue(Long id) {
         issueRepository.deleteById(id);
     }
