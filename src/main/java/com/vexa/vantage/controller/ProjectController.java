@@ -33,6 +33,14 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
+    // Obtener proyectos para el dropdown del BACKLOG (Filtrado por rol)
+    @GetMapping("/backlog")
+    public List<Project> getProjectsForBacklog() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        return projectService.getProjectsForBacklog(email);
+    }
+
     // Crear un nuevo proyecto
     @PostMapping
     @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")

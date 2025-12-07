@@ -4,6 +4,7 @@ import com.vexa.vantage.model.Epic;
 import com.vexa.vantage.model.Story;
 import com.vexa.vantage.model.User;
 import com.vexa.vantage.model.Project;
+import com.vexa.vantage.model.TShirtSize;
 import com.vexa.vantage.repository.ProjectRepository;
 import com.vexa.vantage.repository.UserRepository;
 import com.vexa.vantage.repository.EpicRepository;
@@ -50,6 +51,7 @@ public class StoryController {
         story.setBusinessValue(request.getBusinessValue());
         story.setUrgency(request.getUrgency());
         story.setStoryPoints(request.getStoryPoints());
+        story.setTshirtSize(request.getTshirtSize()); // Campo T-Shirt
         story.setAcceptanceCriteria(request.getAcceptanceCriteria());
 
         story.setProject(project);
@@ -107,6 +109,7 @@ public class StoryController {
         storyDetails.setBusinessValue(request.getBusinessValue());
         storyDetails.setUrgency(request.getUrgency());
         storyDetails.setStoryPoints(request.getStoryPoints());
+        storyDetails.setTshirtSize(request.getTshirtSize()); // Campo T-Shirt
         storyDetails.setAcceptanceCriteria(request.getAcceptanceCriteria());
         return ResponseEntity.ok(storyService.updateStory(id, storyDetails));
     }
@@ -126,6 +129,7 @@ class StoryRequest {
     private Integer businessValue;
     private Integer urgency;
     private Integer storyPoints;
+    private TShirtSize tshirtSize;
     private Long projectId;
     private Long epicId;
     private List<String> acceptanceCriteria;

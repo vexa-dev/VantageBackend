@@ -65,6 +65,7 @@ public class StoryService {
         story.setBusinessValue(storyDetails.getBusinessValue());
         story.setUrgency(storyDetails.getUrgency());
         story.setStoryPoints(storyDetails.getStoryPoints());
+        story.setTshirtSize(storyDetails.getTshirtSize());
 
         // Update acceptance criteria
         if (storyDetails.getAcceptanceCriteria() != null) {

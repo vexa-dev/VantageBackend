@@ -37,8 +37,11 @@ public class Story {
     private Integer urgency = 0;
 
     // Esfuerzo (Story Points): Fibonacci (1, 2, 3, 5, 8...)
-    // Iniciamos en 1 para evitar divisiones por cero
-    private Integer storyPoints = 1;
+    // Iniciamos en null hasta el Planning
+    private Integer storyPoints;
+
+    @Enumerated(EnumType.STRING)
+    private TShirtSize tshirtSize;
 
     // SCORE CALCULADO: (Valor + Urgencia) / Esfuerzo
     private Double priorityScore = 0.0;
@@ -93,15 +96,38 @@ public class Story {
     }
 
     public void calculatePriority() {
-        // Protección contra división por cero
-        if (this.storyPoints == null || this.storyPoints <= 0) {
-            this.storyPoints = 1;
+        // Usar variable local para cálculo, no sobrescribir el campo si es null
+        double effectivePoints = 1.0;
+
+        if (this.storyPoints != null && this.storyPoints > 0) {
+            effectivePoints = this.storyPoints;
+        } else if (this.tshirtSize != null) {
+            // Estimar puntos provisionales basados en talla para el cálculo del score
+            switch (this.tshirtSize) {
+                case XS:
+                    effectivePoints = 1.0;
+                    break;
+                case S:
+                    effectivePoints = 2.0;
+                    break;
+                case M:
+                    effectivePoints = 5.0;
+                    break;
+                case L:
+                    effectivePoints = 8.0;
+                    break;
+                case XL:
+                    effectivePoints = 13.0;
+                    break;
+                default:
+                    effectivePoints = 1.0;
+            }
         }
 
         double val = (this.businessValue != null) ? this.businessValue : 0;
         double urg = (this.urgency != null) ? this.urgency : 0;
 
         // Fórmula WSJF Simplificada
-        this.priorityScore = (val + urg) / this.storyPoints;
+        this.priorityScore = (val + urg) / effectivePoints;
     }
 }

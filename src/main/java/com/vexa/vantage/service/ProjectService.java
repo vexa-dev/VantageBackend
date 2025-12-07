@@ -46,20 +46,55 @@ public class ProjectService {
         // El dueño es automáticamente miembro del equipo
         project.getMembers().add(owner);
 
+        // Asignar proyecto a la empresa del PO
+        if (owner.getCompany() != null) {
+            project.setCompany(owner.getCompany());
+        }
+
         return projectRepository.save(project);
     }
 
-    // Obtener proyectos (Mis proyectos o TODOS si soy ADMIN/OWNER)
+    // Obtener proyectos (Mis proyectos o TODOS si soy ADMIN/OWNER, asegurando
+    // legacy)
     public List<Project> getMyProjects(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        if (user.getRole() == com.vexa.vantage.model.RoleType.ROLE_ADMIN
-                || user.getRole() == com.vexa.vantage.model.RoleType.ROLE_OWNER) {
-            return projectRepository.findAll();
+        java.util.Set<Project> projects = new java.util.HashSet<>();
+
+        // 1. Projects where user is explicitly MEMBERS or OWNER (Basic Visibility)
+        projects.addAll(projectRepository.findByMembersContaining(user));
+        projects.addAll(projectRepository.findByOwner(user));
+
+        // 2. Company Global View
+        if (user.getCompany() != null) {
+            projects.addAll(projectRepository.findByCompanyId(user.getCompany().getId()));
         }
 
-        return projectRepository.findByMembersContaining(user);
+        // 3. ADMIN/OWNER Fallback for Legacy/Orphan Projects
+        // If I am Admin/Owner, I should see projects that have NO company assigned yet
+        // (Legacy Support)
+        // 3. Fallback for Legacy/Orphan Projects (Global Visibility for unassigned)
+        // Ensure projects with NO company are visible to everyone (Legacy Support)
+        // UPDATE: Only show orphans to users who are ALSO orphan (no company).
+        // Company users should not see unrelated orphans to prevent data leaks.
+        if (user.getCompany() == null) {
+            List<Project> allProjects = projectRepository.findAll();
+            for (Project p : allProjects) {
+                if (p.getCompany() == null) {
+                    projects.add(p);
+                }
+            }
+        }
+
+        // 4. Strict Isolation Filter: Remove projects that belong to a DIFFERENT
+        // company
+        if (user.getCompany() != null) {
+            projects.removeIf(p -> p.getCompany() != null
+                    && !p.getCompany().getId().equals(user.getCompany().getId()));
+        }
+
+        return new java.util.ArrayList<>(projects);
     }
 
     // Obtener TODOS los proyectos (para el directorio)
@@ -140,5 +175,35 @@ public class ProjectService {
         }
 
         return projectRepository.save(project);
+    }
+
+    // Obtener proyectos especificos para el BACKLOG (Dropdown)
+    // ADMIN/OWNER: Ven todo (Global Legacy)
+    // PO/SM/DEV: Ven SOLO sus asignaciones (Strict Assigned)
+    public List<Project> getProjectsForBacklog(String userEmail) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        java.util.Set<Project> projects = new java.util.HashSet<>();
+
+        // Si es ADMIN u OFFICER (Owner), usa la logica global (ver todo lo de su
+        // empresa +
+        // legacy)
+        if (user.getRole() == com.vexa.vantage.model.RoleType.ROLE_ADMIN
+                || user.getRole() == com.vexa.vantage.model.RoleType.ROLE_OWNER) {
+            return getMyProjects(userEmail);
+        }
+
+        // Si es un ROL OPERATIVO (PO, SM, DEV), solo ve asignaciones explicitas
+        projects.addAll(projectRepository.findByMembersContaining(user));
+        projects.addAll(projectRepository.findByOwner(user));
+
+        // CRITICAL SECURITY: Filtrar siempre proyectos de otras empresas
+        if (user.getCompany() != null) {
+            projects.removeIf(p -> p.getCompany() != null
+                    && !p.getCompany().getId().equals(user.getCompany().getId()));
+        }
+
+        return new java.util.ArrayList<>(projects);
     }
 }
