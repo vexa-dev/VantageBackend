@@ -24,10 +24,14 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    @JsonIgnore
+    @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private Boolean enabled = true;
+
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    @com.fasterxml.jackson.annotation.JsonProperty("isActive")
+    private boolean isActive = true;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -41,6 +45,7 @@ public class User {
     // Company relationship
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Company company;
 
     @PrePersist

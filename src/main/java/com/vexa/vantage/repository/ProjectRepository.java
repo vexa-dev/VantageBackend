@@ -11,4 +11,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     // Encuentra proyectos donde el usuario es Miembro (Equipo)
     List<Project> findByMembersContaining(User user);
+
+    List<Project> findByScrumMaster(User scrumMaster);
 }

@@ -40,9 +40,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                 // Guardar al usuario en el contexto de seguridad (Sesión actual)
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                System.out.println("✅ AuthTokenFilter: Usuario autenticado: " + username);
+            } else {
+                System.out.println("❌ AuthTokenFilter: Token inválido o nulo");
             }
         } catch (Exception e) {
-            System.err.println("No se pudo establecer la autenticación de usuario: " + e);
+            System.err.println("❌ AuthTokenFilter: Error en autenticación: " + e.getMessage());
             e.printStackTrace();
         }
 
