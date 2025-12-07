@@ -42,19 +42,47 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
     // Guardar usuario (Lo usaremos en el registro)
     public User save(User user) {
         return userRepository.save(user);
     }
 
-    // Listar TODOS los usuarios por empresa (Activos e Inactivos)
-    public List<User> getAllUsersByCompany(Long companyId) {
-        return userRepository.findAllByCompanyId(companyId);
+    // Listar usuarios filtrados según el rol del solicitante
+    public List<User> getUsersForRole(Long companyId, RoleType requesterRole) {
+        List<User> allUsers = userRepository.findAllByCompanyId(companyId);
+
+        if (requesterRole == RoleType.ROLE_ADMIN) {
+            // Admin solo ve PO, SM y DEV
+            return allUsers.stream()
+                    .filter(u -> u.getRole() == RoleType.ROLE_PO ||
+                            u.getRole() == RoleType.ROLE_SM ||
+                            u.getRole() == RoleType.ROLE_DEV)
+                    .toList();
+        }
+
+        // Owner ve todo
+        return allUsers;
+    }
+
+    public List<User> getUsersByRole(Long companyId, RoleType role) {
+        return userRepository.findAllByCompanyId(companyId).stream()
+                .filter(u -> u.getRole() == role)
+                .toList();
     }
 
     // Crear usuario genérico (Validado por controller, pero aquí validamos lógica
     // extra)
+    // Crear usuario genérico (Validado por controller, pero aquí validamos lógica
+    // extra)
     public User createUser(User user, User creator) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("El correo electrónico ya está registrado.");
+        }
+
         if (!creator.getRole().equals(RoleType.ROLE_OWNER)) {
             // Solo el owner puede crear Admins, pero en general el endpoint valida mejor
             if (user.getRole().equals(RoleType.ROLE_ADMIN)) {

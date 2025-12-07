@@ -20,21 +20,27 @@ public class ProjectService {
     private UserRepository userRepository;
 
     // Crear un nuevo proyecto
-    public Project createProject(String name, String description, String ownerEmail, String icon, Long scrumMasterId,
+    public Project createProject(String name, String description, String icon, Long poId, Long smId, List<Long> devIds,
             LocalDate startDate, LocalDate endDate) {
-        User owner = userRepository.findByEmail(ownerEmail)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        User owner = userRepository.findById(poId)
+                .orElseThrow(() -> new RuntimeException("Product Owner no encontrado"));
 
         Project project = new Project(name, description, owner);
         project.setIcon(icon);
         project.setStartDate(startDate);
         project.setEndDate(endDate);
 
-        if (scrumMasterId != null) {
-            User scrumMaster = userRepository.findById(scrumMasterId)
+        if (smId != null) {
+            User scrumMaster = userRepository.findById(smId)
                     .orElseThrow(() -> new RuntimeException("Scrum Master no encontrado"));
             project.setScrumMaster(scrumMaster);
             project.getMembers().add(scrumMaster);
+        }
+
+        if (devIds != null && !devIds.isEmpty()) {
+            List<User> developers = userRepository.findAllById(devIds);
+            project.getMembers().addAll(developers);
         }
 
         // El dueño es automáticamente miembro del equipo
@@ -43,10 +49,16 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    // Obtener proyectos donde soy miembro
+    // Obtener proyectos (Mis proyectos o TODOS si soy ADMIN/OWNER)
     public List<Project> getMyProjects(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (user.getRole() == com.vexa.vantage.model.RoleType.ROLE_ADMIN
+                || user.getRole() == com.vexa.vantage.model.RoleType.ROLE_OWNER) {
+            return projectRepository.findAll();
+        }
+
         return projectRepository.findByMembersContaining(user);
     }
 
@@ -84,18 +96,47 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    public Project updateProject(Long id, Project projectDetails) {
+    public Project updateProject(Long id, String name, String description, String icon, LocalDate startDate,
+            LocalDate endDate, String status, Long poId, Long smId, List<Long> devIds) {
         Project project = findById(id);
-        project.setName(projectDetails.getName());
-        project.setDescription(projectDetails.getDescription());
-        project.setIcon(projectDetails.getIcon());
-        project.setStartDate(projectDetails.getStartDate());
-        project.setEndDate(projectDetails.getEndDate());
-        project.setStatus(projectDetails.getStatus());
+        project.setName(name);
+        project.setDescription(description);
+        project.setIcon(icon);
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
+        project.setStatus(status);
 
-        if (projectDetails.getScrumMaster() != null) {
-            project.setScrumMaster(projectDetails.getScrumMaster());
-            project.getMembers().add(projectDetails.getScrumMaster());
+        if (poId != null) {
+            User newOwner = userRepository.findById(poId)
+                    .orElseThrow(() -> new RuntimeException("Product Owner no encontrado"));
+            project.setOwner(newOwner);
+        }
+
+        if (smId != null) {
+            User newSM = userRepository.findById(smId)
+                    .orElseThrow(() -> new RuntimeException("Scrum Master no encontrado"));
+            project.setScrumMaster(newSM);
+        }
+
+        // Reconstruir lista de miembros si se envían devIds
+        if (devIds != null) {
+            project.getMembers().clear();
+
+            // Agregar siempre al Owner actual
+            if (project.getOwner() != null) {
+                project.getMembers().add(project.getOwner());
+            }
+
+            // Agregar siempre al SM actual
+            if (project.getScrumMaster() != null) {
+                project.getMembers().add(project.getScrumMaster());
+            }
+
+            // Agregar nuevos devs
+            if (!devIds.isEmpty()) {
+                List<User> developers = userRepository.findAllById(devIds);
+                project.getMembers().addAll(developers);
+            }
         }
 
         return projectRepository.save(project);

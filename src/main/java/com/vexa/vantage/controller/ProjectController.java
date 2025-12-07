@@ -35,10 +35,8 @@ public class ProjectController {
 
     // Crear un nuevo proyecto
     @PostMapping
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createProject(@RequestBody Map<String, Object> request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String ownerEmail = auth.getName();
-
         String name = (String) request.get("name");
         String description = (String) request.get("description");
         String icon = (String) request.get("icon");
@@ -53,12 +51,24 @@ public class ProjectController {
             endDate = java.time.LocalDate.parse((String) request.get("endDate"));
         }
 
-        Long scrumMasterId = null;
-        if (request.get("scrumMasterId") != null) {
-            scrumMasterId = Long.valueOf(request.get("scrumMasterId").toString());
+        Long poId = null;
+        if (request.get("poId") != null) {
+            poId = Long.valueOf(request.get("poId").toString());
         }
 
-        Project newProject = projectService.createProject(name, description, ownerEmail, icon, scrumMasterId, startDate,
+        Long smId = null;
+        if (request.get("smId") != null) {
+            smId = Long.valueOf(request.get("smId").toString());
+        }
+
+        List<Long> devIds = null;
+        if (request.get("devIds") != null) {
+            devIds = (List<Long>) request.get("devIds");
+            // Ensure types are correct if JSON library parses as Integers
+            devIds = devIds.stream().map(id -> Long.valueOf(id.toString())).toList();
+        }
+
+        Project newProject = projectService.createProject(name, description, icon, poId, smId, devIds, startDate,
                 endDate);
         return ResponseEntity.ok(newProject);
     }
@@ -70,8 +80,43 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProject(@PathVariable Long id, @RequestBody Project projectDetails) {
-        return ResponseEntity.ok(projectService.updateProject(id, projectDetails));
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateProject(@PathVariable Long id, @RequestBody Map<String, Object> request) {
+        String name = (String) request.get("name");
+        String description = (String) request.get("description");
+        String icon = (String) request.get("icon");
+        String status = (String) request.get("status");
+
+        java.time.LocalDate startDate = null;
+        if (request.get("startDate") != null) {
+            startDate = java.time.LocalDate.parse((String) request.get("startDate"));
+        }
+
+        java.time.LocalDate endDate = null;
+        if (request.get("endDate") != null) {
+            endDate = java.time.LocalDate.parse((String) request.get("endDate"));
+        }
+
+        Long poId = null;
+        if (request.get("poId") != null) {
+            poId = Long.valueOf(request.get("poId").toString());
+        }
+
+        Long smId = null;
+        if (request.get("scrumMasterId") != null) { // Frontend sends as scrumMasterId usually
+            smId = Long.valueOf(request.get("scrumMasterId").toString());
+        } else if (request.get("smId") != null) {
+            smId = Long.valueOf(request.get("smId").toString());
+        }
+
+        List<Long> devIds = null;
+        if (request.get("devIds") != null) {
+            devIds = (List<Long>) request.get("devIds");
+            devIds = devIds.stream().map(val -> Long.valueOf(val.toString())).toList();
+        }
+
+        return ResponseEntity.ok(projectService.updateProject(id, name, description, icon, startDate, endDate, status,
+                poId, smId, devIds));
     }
 
     @PutMapping("/{id}/members")

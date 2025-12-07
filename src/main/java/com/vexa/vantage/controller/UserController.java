@@ -25,21 +25,41 @@ public class UserController {
     @GetMapping("/company")
     @PreAuthorize("hasRole('OWNER') or hasRole('ADMIN')")
     public ResponseEntity<List<User>> getUsersByCompany(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        // Assuming user details has company ID, or we fetch it via user service using
-        // ID
-        // For simplicity, let's look up the user object to get company if not in
-        // details
         User currentUser = userService.findByEmail(userDetails.getUsername()).orElseThrow();
         Long companyId = currentUser.getCompany().getId();
 
-        return ResponseEntity.ok(userService.getAllUsersByCompany(companyId));
+        return ResponseEntity.ok(userService.getUsersForRole(companyId, currentUser.getRole()));
+    }
+
+    @GetMapping("/role/{role}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PO') or hasRole('SM') or hasRole('OWNER')")
+    public ResponseEntity<List<User>> getUsersByRole(@PathVariable String role,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        try {
+            User currentUser = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+            Long companyId = currentUser.getCompany().getId();
+            com.vexa.vantage.model.RoleType roleType = com.vexa.vantage.model.RoleType.valueOf(role.toUpperCase());
+            return ResponseEntity.ok(userService.getUsersByRole(companyId, roleType));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('OWNER')")
+    @PreAuthorize("hasRole('OWNER') or hasRole('ADMIN')")
     public ResponseEntity<?> createUser(@RequestBody User user, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
             User creator = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+
+            // Validación extra para ADMIN
+            if (creator.getRole().name().equals("ROLE_ADMIN")) {
+                if (user.getRole().name().equals("ROLE_OWNER") || user.getRole().name().equals("ROLE_ADMIN")) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                            .body(Map.of("message",
+                                    "Como Administrador, solo puedes crear PO, Scrum Masters y Desarrolladores."));
+                }
+            }
+
             User createdUser = userService.createUser(user, creator);
             return ResponseEntity.ok(createdUser);
         } catch (RuntimeException e) {
@@ -79,9 +99,28 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
+    @PreAuthorize("hasRole('OWNER') or hasRole('ADMIN')")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
+            User executor = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+            User targetUser = userService.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            // Validación extra para ADMIN
+            if (executor.getRole().name().equals("ROLE_ADMIN")) {
+                // No puede editar al Owner ni a otros Admins
+                if (targetUser.getRole().name().equals("ROLE_OWNER")
+                        || targetUser.getRole().name().equals("ROLE_ADMIN")) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                            .body(Map.of("message", "No tienes permisos para editar a este usuario."));
+                }
+                // No puede promover a nadie a Owner o Admin
+                if (user.getRole().name().equals("ROLE_OWNER") || user.getRole().name().equals("ROLE_ADMIN")) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                            .body(Map.of("message", "No puedes asignar roles de Administrador o Owner."));
+                }
+            }
+
             User updatedUser = userService.updateUser(id, user);
             return ResponseEntity.ok(updatedUser);
         } catch (RuntimeException e) {
