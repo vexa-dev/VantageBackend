@@ -1,9 +1,7 @@
 package com.vexa.vantage.controller;
 
-import com.vexa.vantage.model.Role;
 import com.vexa.vantage.model.RoleType;
 import com.vexa.vantage.model.User;
-import com.vexa.vantage.repository.RoleRepository;
 import com.vexa.vantage.repository.UserRepository;
 import com.vexa.vantage.security.JwtUtils;
 import com.vexa.vantage.security.UserDetailsImpl;
@@ -16,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,7 +30,7 @@ public class AuthController {
     UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    com.vexa.vantage.repository.CompanyRepository companyRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -59,6 +56,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
+                userDetails.getFullName(),
                 roles));
     }
 
@@ -71,57 +69,34 @@ public class AuthController {
                     .body(new MessageResponse("Error: El email ya está en uso!"));
         }
 
-        // Crear nuevo usuario
+        // Validar nombre de empresa
+        if (signUpRequest.getCompanyName() == null || signUpRequest.getCompanyName().isEmpty()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: El nombre de la empresa es obligatorio."));
+        }
+
+        // Crear Empresa
+        com.vexa.vantage.model.Company company = new com.vexa.vantage.model.Company(
+                signUpRequest.getCompanyName(),
+                signUpRequest.getSubscriptionType() != null ? signUpRequest.getSubscriptionType() : "FREE");
+        company = companyRepository.save(company);
+
+        // Crear usuario OWNER
         User user = new User(signUpRequest.getFullName(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
+        user.setRole(RoleType.ROLE_OWNER); // Siempre es OWNER en este flujo
+        user.setCompany(company); // Asignar a la empresa creada
 
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(RoleType.ROLE_DEV)
-                    .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(RoleType.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                        roles.add(adminRole);
-                        break;
-                    case "po":
-                        Role poRole = roleRepository.findByName(RoleType.ROLE_PO)
-                                .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                        roles.add(poRole);
-                        break;
-                    case "sm":
-                        Role smRole = roleRepository.findByName(RoleType.ROLE_SM)
-                                .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                        roles.add(smRole);
-                        break;
-                    default:
-                        Role devRole = roleRepository.findByName(RoleType.ROLE_DEV)
-                                .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                        roles.add(devRole);
-                }
-            });
-        }
-
-        user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("Usuario registrado exitosamente!"));
+        return ResponseEntity.ok(new MessageResponse("Empresa y Dueño registrados exitosamente!"));
     }
 }
 
 // CLASES AUXILIARES (DTOs) PARA RECIBIR DATOS
-// Puedes ponerlas en archivos separados en un paquete 'payload' o aquí mismo
-// abajo por simplicidad.
-// Por orden, te recomiendo ponerlas aquí abajo temporalmente para que compile
-// rápido.
-
 @lombok.Data
 class LoginRequest {
     private String email;
@@ -132,7 +107,10 @@ class LoginRequest {
 class SignupRequest {
     private String fullName;
     private String email;
-    private Set<String> role;
+    private String companyName; // Nuevo campo
+    private String subscriptionType; // Nuevo campo (opcional)
+    private Set<String> role; // Ignorado en este flujo, pero mantenido por compatibilidad si es necesario o
+                              // se puede quitar
     private String password;
 }
 
@@ -142,6 +120,7 @@ class JwtResponse {
     private String token;
     private Long id;
     private String email;
+    private String fullName;
     private List<String> roles;
 }
 

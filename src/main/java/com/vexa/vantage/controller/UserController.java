@@ -128,7 +128,7 @@ public class UserController {
         try {
             // Asumimos que el frontend envía "ROLE_SM", "ROLE_PO", etc.
             RoleType roleType = RoleType.valueOf(roleName);
-            List<User> users = userRepository.findByRoles_Name(roleType);
+            List<User> users = userRepository.findByRole(roleType);
 
             // Mapear a una respuesta simple para no devolver password ni datos sensibles
             List<Map<String, Object>> userDtos = users.stream()

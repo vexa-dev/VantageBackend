@@ -5,4 +5,5 @@ public enum RoleType {
     ROLE_PO,
     ROLE_SM,
     ROLE_DEV,
+    ROLE_OWNER
 }

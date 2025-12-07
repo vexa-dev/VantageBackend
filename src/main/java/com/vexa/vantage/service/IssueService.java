@@ -25,8 +25,7 @@ public class IssueService {
                 .orElseThrow(() -> new RuntimeException("Story no encontrada"));
 
         return story.getProject().getMembers().stream()
-                .filter(user -> user.getRoles().stream()
-                        .anyMatch(role -> role.getName() == com.vexa.vantage.model.RoleType.ROLE_DEV))
+                .filter(user -> user.getRole() == com.vexa.vantage.model.RoleType.ROLE_DEV)
                 .collect(java.util.stream.Collectors.toSet());
     }
 

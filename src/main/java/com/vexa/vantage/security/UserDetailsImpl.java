@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
@@ -16,30 +15,31 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
     private String username; // En nuestro caso es el email
     private String email;
+    private String fullName;
 
     @JsonIgnore
     private String password; // La contraseña hash
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String email, String password,
+    public UserDetailsImpl(Long id, String email, String fullName, String password,
             Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = email; // Usamos email como username
         this.email = email;
+        this.fullName = fullName;
         this.password = password;
         this.authorities = authorities;
     }
 
     // Método estático para construir el objeto desde tu Entidad User
     public static UserDetailsImpl build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
 
         return new UserDetailsImpl(
                 user.getId(),
                 user.getEmail(),
+                user.getFullName(),
                 user.getPassword(),
                 authorities);
     }
@@ -55,6 +55,10 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     @Override

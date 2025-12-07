@@ -47,6 +47,11 @@ public class Project {
     @JoinColumn(name = "scrum_master_id")
     private User scrumMaster;
 
+    // Empresa a la que pertenece el proyecto
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     // Los miembros del equipo asignados a este proyecto (PO, SM, Devs)
     @ManyToMany
     @JoinTable(name = "project_members", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
