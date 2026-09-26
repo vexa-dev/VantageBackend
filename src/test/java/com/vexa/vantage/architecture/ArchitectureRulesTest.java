@@ -34,6 +34,18 @@ class ArchitectureRulesTest {
             "shared", "identity", "delivery", "collaboration"
     };
 
+    /**
+     * Contextos delimitados de negocio que no deben depender del dominio del
+     * otro. {@code shared} queda fuera a propósito: es el "shared kernel"
+     * (objetos de valor y excepciones de dominio comunes, por ejemplo
+     * {@code TenantId}/{@code UserId}) que todo contexto delimitado puede y
+     * debe reutilizar; solo se le exige pureza de framework (ver la primera
+     * regla), no aislamiento respecto de los demás.
+     */
+    private static final String[] ISOLATED_BOUNDED_CONTEXTS = {
+            "identity", "delivery", "collaboration"
+    };
+
     private static JavaClasses importedClasses;
 
     @BeforeAll
@@ -55,8 +67,8 @@ class ArchitectureRulesTest {
 
     @Test
     void domainPackagesDoNotDependOnOtherBoundedContextsDomain() {
-        for (String context : BOUNDED_CONTEXTS) {
-            for (String otherContext : BOUNDED_CONTEXTS) {
+        for (String context : ISOLATED_BOUNDED_CONTEXTS) {
+            for (String otherContext : ISOLATED_BOUNDED_CONTEXTS) {
                 if (context.equals(otherContext)) {
                     continue;
                 }
