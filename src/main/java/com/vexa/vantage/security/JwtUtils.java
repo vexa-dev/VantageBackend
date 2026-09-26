@@ -38,14 +38,14 @@ public class JwtUtils {
 
     // Sacar el email del token
     public String getUserNameFromJwtToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(key()).build()
+        return Jwts.parser().setSigningKey(key()).build()
                 .parseClaimsJws(token).getBody().getSubject();
     }
 
     // Validar que el token sea real
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(key()).build().parseClaimsJws(authToken);
             return true;
         } catch (JwtException e) {
             System.err.println("Invalid JWT token: " + e.getMessage());
