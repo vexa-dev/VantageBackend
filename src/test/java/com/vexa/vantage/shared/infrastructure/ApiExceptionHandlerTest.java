@@ -39,6 +39,54 @@ class ApiExceptionHandlerTest {
     }
 
     @Test
+    void insufficientPermissionExceptionMapsTo403() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/insufficient-permission"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.status").value(403))
+                .andExpect(jsonPath("$.message").value("Role 'MEMBER' is not a tenant administrator"));
+    }
+
+    @Test
+    void invalidCredentialsExceptionMapsTo401() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/invalid-credentials"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status").value(401))
+                .andExpect(jsonPath("$.message").value("Invalid email or password"));
+    }
+
+    @Test
+    void jwtExceptionMapsTo401() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/jwt-exception"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status").value(401))
+                .andExpect(jsonPath("$.message").value("Invalid or expired token"));
+    }
+
+    @Test
+    void refreshTokenReuseDetectedExceptionMapsTo401() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/refresh-token-reuse"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status").value(401))
+                .andExpect(jsonPath("$.message").value("Refresh token reuse detected for user 'user-1'"));
+    }
+
+    @Test
+    void refreshTokenNotFoundExceptionMapsTo401() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/unknown-jti"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status").value(401))
+                .andExpect(jsonPath("$.message").value("Unknown refresh token jti: abc-123"));
+    }
+
+    @Test
+    void userNotFoundExceptionMapsTo404() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/unknown-user"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.message").value("User not found: user-1"));
+    }
+
+    @Test
     void beanValidationFailureMapsTo400WithFieldDetail() throws Exception {
         mockMvc.perform(post("/test/api-exception-handler/bean-validation")
                         .contentType("application/json")

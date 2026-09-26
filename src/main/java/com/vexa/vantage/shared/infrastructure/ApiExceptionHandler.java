@@ -1,7 +1,13 @@
 package com.vexa.vantage.shared.infrastructure;
 
+import com.vexa.vantage.identity.application.InvalidCredentialsException;
+import com.vexa.vantage.identity.application.RefreshTokenNotFoundException;
+import com.vexa.vantage.identity.application.RefreshTokenReuseDetectedException;
+import com.vexa.vantage.identity.application.UserNotFoundException;
+import com.vexa.vantage.identity.domain.InsufficientPermissionException;
 import com.vexa.vantage.shared.domain.CrossTenantAccessException;
 import com.vexa.vantage.shared.domain.DomainValidationException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -19,6 +25,19 @@ import java.util.List;
  *     <li>{@link DomainValidationException} → 400 Bad Request</li>
  *     <li>{@link CrossTenantAccessException} → 404 Not Found (un recurso de
  *     otro tenant debe aparecer como inexistente, no como prohibido)</li>
+ *     <li>{@link InsufficientPermissionException} → 403 Forbidden (el actor
+ *     existe y está autenticado, pero su rol no alcanza)</li>
+ *     <li>{@link InvalidCredentialsException} → 401 Unauthorized (login con
+ *     email/contraseña incorrectos, o usuario deshabilitado)</li>
+ *     <li>{@link JwtException} → 401 Unauthorized (token de acceso o de
+ *     refresh malformado, con firma inválida, o expirado)</li>
+ *     <li>{@link RefreshTokenReuseDetectedException} → 401 Unauthorized
+ *     (reuso detectado de un refresh token ya revocado)</li>
+ *     <li>{@link RefreshTokenNotFoundException} → 401 Unauthorized (un
+ *     {@code jti} de refresh token desconocido)</li>
+ *     <li>{@link UserNotFoundException} → 404 Not Found (el usuario
+ *     objetivo de una operación de administración no existe, o no pertenece
+ *     al tenant vigente)</li>
  *     <li>{@link MethodArgumentNotValidException} (Bean Validation sobre
  *     {@code @RequestBody}) → 400 Bad Request con un detalle de campo por
  *     cada violación</li>
@@ -35,6 +54,50 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(CrossTenantAccessException.class)
     public ResponseEntity<ApiError> handleCrossTenantAccess(CrossTenantAccessException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiError.of(HttpStatus.NOT_FOUND, exception.getMessage()));
+    }
+
+    @ExceptionHandler(InsufficientPermissionException.class)
+    public ResponseEntity<ApiError> handleInsufficientPermission(InsufficientPermissionException exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ApiError.of(HttpStatus.FORBIDDEN, exception.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ApiError> handleInvalidCredentials(InvalidCredentialsException exception) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ApiError.of(HttpStatus.UNAUTHORIZED, exception.getMessage()));
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiError> handleJwtException(JwtException exception) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ApiError.of(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
+    }
+
+    // Nota de diseño: deliberadamente NO se mapean acá los tipos genéricos
+    // del JDK `SecurityException`/`IllegalArgumentException`. Cualquier
+    // código no relacionado con autenticación (validaciones de otros
+    // bounded contexts, bugs de argumentos) puede lanzarlos, y un mapeo
+    // global a 401 les asignaría incorrectamente un significado de
+    // autenticación que no tienen. Cada handler de abajo captura solo el
+    // tipo específico que `RefreshTokenService` efectivamente lanza.
+
+    @ExceptionHandler(RefreshTokenReuseDetectedException.class)
+    public ResponseEntity<ApiError> handleRefreshTokenReuseDetected(RefreshTokenReuseDetectedException exception) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ApiError.of(HttpStatus.UNAUTHORIZED, exception.getMessage()));
+    }
+
+    @ExceptionHandler(RefreshTokenNotFoundException.class)
+    public ResponseEntity<ApiError> handleRefreshTokenNotFound(RefreshTokenNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ApiError.of(HttpStatus.UNAUTHORIZED, exception.getMessage()));
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiError> handleUserNotFound(UserNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ApiError.of(HttpStatus.NOT_FOUND, exception.getMessage()));
     }
