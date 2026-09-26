@@ -6,12 +6,15 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 /**
- * Shared PostgreSQL Testcontainers configuration for the test suite.
+ * Configuración compartida de Testcontainers para PostgreSQL usada por la
+ * suite de pruebas.
  *
- * <p>Extend this class from any {@code @DataJpaTest} or {@code @SpringBootTest} that
- * needs a real PostgreSQL database. The container is started exactly once per JVM via
- * a static initializer block (the "singleton container" pattern) and is reused by every
- * test class that extends this base, instead of starting a fresh container per class.</p>
+ * <p>Extienda esta clase desde cualquier {@code @DataJpaTest} o {@code @SpringBootTest}
+ * que necesite una base de datos PostgreSQL real. El contenedor se inicia
+ * exactamente una vez por JVM mediante un bloque estático de inicialización
+ * (el patrón de "contenedor único" o "singleton container") y es reutilizado
+ * por cada clase de prueba que extiende esta base, en lugar de iniciar un
+ * contenedor nuevo por cada clase.</p>
  */
 public abstract class PostgresTestContainerConfig {
 

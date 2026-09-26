@@ -9,12 +9,14 @@ import org.junit.jupiter.api.Test;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 /**
- * Enforces the Hexagonal / DDD-lite boundaries of the platform rearchitecture:
+ * Impone los límites Hexagonal / DDD-lite de la re-arquitectura de la
+ * plataforma:
  * <ul>
- *     <li>Domain packages of every bounded context stay framework-agnostic
- *     (no Spring, Hibernate/JPA, or Jackson dependency).</li>
- *     <li>A bounded context's domain package never depends on another bounded
- *     context's domain package.</li>
+ *     <li>Los paquetes de dominio de cada contexto delimitado (bounded
+ *     context) permanecen independientes de framework (sin dependencia de
+ *     Spring, Hibernate/JPA ni Jackson).</li>
+ *     <li>El paquete de dominio de un contexto delimitado nunca depende del
+ *     paquete de dominio de otro contexto delimitado.</li>
  * </ul>
  */
 class ArchitectureRulesTest {
@@ -69,9 +71,9 @@ class ArchitectureRulesTest {
     }
 
     /**
-     * Builds the ArchUnit package predicate for a bounded context's domain
-     * layer, e.g. {@code domainPackageOf("identity")} yields
-     * {@code "..vantage.identity.domain.."}.
+     * Construye el predicado de paquete de ArchUnit para la capa de dominio
+     * de un contexto delimitado, por ejemplo {@code domainPackageOf("identity")}
+     * produce {@code "..vantage.identity.domain.."}.
      */
     private static String domainPackageOf(String boundedContext) {
         return "..vantage." + boundedContext + ".domain..";

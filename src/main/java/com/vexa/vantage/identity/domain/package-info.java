@@ -1,6 +1,6 @@
 /**
- * Framework-agnostic domain model for identity and access management
- * (tenants, users, roles, permissions). Must not depend on Spring, JPA,
- * or Jackson.
+ * Modelo de dominio independiente de framework para la gestión de identidad y
+ * accesos (tenants, usuarios, roles, permisos). No debe depender de Spring,
+ * JPA ni Jackson.
  */
 package com.vexa.vantage.identity.domain;

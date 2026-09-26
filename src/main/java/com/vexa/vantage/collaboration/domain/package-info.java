@@ -1,5 +1,6 @@
 /**
- * Framework-agnostic domain model for collaboration features (comments,
- * mentions, notifications). Must not depend on Spring, JPA, or Jackson.
+ * Modelo de dominio independiente de framework para las funcionalidades de
+ * colaboración (comentarios, menciones, notificaciones). No debe depender de
+ * Spring, JPA ni Jackson.
  */
 package com.vexa.vantage.collaboration.domain;

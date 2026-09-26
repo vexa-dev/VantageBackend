@@ -1,6 +1,6 @@
 /**
- * Framework-agnostic domain model for the configurable delivery/workflow
- * engine (stages, transitions, assignments). Must not depend on Spring, JPA,
- * or Jackson.
+ * Modelo de dominio independiente de framework para el motor configurable de
+ * entrega/flujo de trabajo (delivery/workflow) (etapas, transiciones,
+ * asignaciones). No debe depender de Spring, JPA ni Jackson.
  */
 package com.vexa.vantage.delivery.domain;
