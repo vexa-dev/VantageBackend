@@ -87,6 +87,38 @@ class ApiExceptionHandlerTest {
     }
 
     @Test
+    void projectNotFoundExceptionMapsTo404() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/unknown-project"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.message").value("Project 'p-1' not found"));
+    }
+
+    @Test
+    void workItemNotFoundExceptionMapsTo404() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/unknown-work-item"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.message").value("WorkItem 'w-1' not found"));
+    }
+
+    @Test
+    void workflowDefinitionNotFoundExceptionMapsTo404() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/unknown-workflow-definition"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.message").value("WorkflowDefinition 'wfd-1' not found"));
+    }
+
+    @Test
+    void illegalTransitionExceptionMapsTo400() throws Exception {
+        mockMvc.perform(post("/test/api-exception-handler/illegal-transition"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.message").value("Transition from 'TODO' to 'DONE' is not defined for item type 'STORY'"));
+    }
+
+    @Test
     void beanValidationFailureMapsTo400WithFieldDetail() throws Exception {
         mockMvc.perform(post("/test/api-exception-handler/bean-validation")
                         .contentType("application/json")

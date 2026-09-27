@@ -20,8 +20,9 @@ import java.io.IOException;
  * {@link JwtAuthenticationFilter} como único mecanismo de autenticación.
  *
  * <p>CSRF queda deshabilitado para {@code /api/v1/auth/refresh},
- * {@code /api/v1/auth/logout}, {@code /api/v1/users/**} y
- * {@code /api/v1/projects/**}. Las dos primeras dependen de la cookie
+ * {@code /api/v1/auth/logout}, {@code /api/v1/users/**},
+ * {@code /api/v1/projects/**} y {@code /api/v1/work-items/**} (Phase 4: el
+ * contexto de delivery). Las dos primeras dependen de la cookie
  * {@code refresh_token} (con envío automático del navegador) en lugar de un
  * bearer token explícito, por lo que SÍ están expuestas al patrón de ataque
  * que CSRF previene (una credencial ambiente que el navegador adjunta solo);
@@ -44,12 +45,17 @@ import java.io.IOException;
  * esta cadena pase a ser el catch-all único de la aplicación.
  *
  * <p>{@code SECURITY_MATCHER_PATHS} amplía ese acotamiento con
- * {@code /api/v1/users/**} y {@code /api/v1/projects/**} (fases 3.32/3.35):
- * son rutas nuevas del contexto de identidad que también deben pasar por
- * {@link JwtAuthenticationFilter} (no por el {@code AuthTokenFilter} legado,
- * que no entiende los claims {@code uid}/{@code tid} ni el usuario de
- * {@code app_user}), aunque a diferencia de {@code /api/v1/auth/**} SÍ
- * exigen autenticación (no están en {@code PERMIT_ALL_PATHS}).
+ * {@code /api/v1/users/**} y {@code /api/v1/projects/**} (fases 3.32/3.35),
+ * y con {@code /api/v1/work-items/**} (Phase 4 batch 3b): son rutas nuevas
+ * que también deben pasar por {@link JwtAuthenticationFilter} (no por el
+ * {@code AuthTokenFilter} legado, que no entiende los claims
+ * {@code uid}/{@code tid} ni el usuario de {@code app_user}), aunque a
+ * diferencia de {@code /api/v1/auth/**} SÍ exigen autenticación (no están en
+ * {@code PERMIT_ALL_PATHS}). {@code /api/v1/projects/**} ya cubre
+ * {@code GET /api/v1/projects/{id}/board} y
+ * {@code GET/PATCH /api/v1/projects/{id}/workflow-definition|status}
+ * (delivery); solo {@code PATCH /api/v1/work-items/{id}} vive fuera de ese
+ * prefijo.
  */
 @Configuration
 @EnableWebSecurity
@@ -66,7 +72,8 @@ public class SecurityConfig {
         "/actuator/health/readiness",
         "/api/v1/auth/**",
         "/api/v1/users/**",
-        "/api/v1/projects/**"
+        "/api/v1/projects/**",
+        "/api/v1/work-items/**"
     };
 
     /**
@@ -85,7 +92,7 @@ public class SecurityConfig {
         http.securityMatcher(SECURITY_MATCHER_PATHS)
                 .csrf(csrf -> csrf.ignoringRequestMatchers(
                         "/api/v1/auth/refresh", "/api/v1/auth/logout",
-                        "/api/v1/users/**", "/api/v1/projects/**"))
+                        "/api/v1/users/**", "/api/v1/projects/**", "/api/v1/work-items/**"))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(SecurityConfig::respondUnauthorized)

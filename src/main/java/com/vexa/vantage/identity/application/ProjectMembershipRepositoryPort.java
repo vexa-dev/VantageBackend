@@ -26,6 +26,12 @@ public interface ProjectMembershipRepositoryPort {
     Optional<ProjectMembership> findByProjectIdAndUserId(String projectId, UserId userId);
 
     /**
+     * Lista todas las membresías (de cualquier proyecto) del usuario
+     * indicado.
+     */
+    List<ProjectMembership> findByUserId(UserId userId);
+
+    /**
      * Guarda (inserta o actualiza) una membresía de proyecto.
      */
     void save(ProjectMembership membership);

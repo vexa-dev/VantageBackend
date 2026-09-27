@@ -43,6 +43,13 @@ public class ProjectMembershipRepositoryAdapter implements ProjectMembershipRepo
     }
 
     @Override
+    public List<ProjectMembership> findByUserId(UserId userId) {
+        return repository.findByUserId(Long.parseLong(userId.value())).stream()
+                .map(ProjectMembershipMapper::toDomain)
+                .toList();
+    }
+
+    @Override
     public void save(ProjectMembership membership) {
         repository.save(ProjectMembershipMapper.toEntity(membership));
     }
