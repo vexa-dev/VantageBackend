@@ -1,5 +1,9 @@
 package com.vexa.vantage.shared.infrastructure;
 
+import com.vexa.vantage.delivery.application.ProjectNotFoundException;
+import com.vexa.vantage.delivery.application.WorkItemNotFoundException;
+import com.vexa.vantage.delivery.application.WorkflowDefinitionNotFoundException;
+import com.vexa.vantage.delivery.domain.IllegalTransitionException;
 import com.vexa.vantage.identity.application.InvalidCredentialsException;
 import com.vexa.vantage.identity.application.RefreshTokenNotFoundException;
 import com.vexa.vantage.identity.application.RefreshTokenReuseDetectedException;
@@ -100,6 +104,38 @@ public class ApiExceptionHandler {
     public ResponseEntity<ApiError> handleUserNotFound(UserNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ApiError.of(HttpStatus.NOT_FOUND, exception.getMessage()));
+    }
+
+    @ExceptionHandler(ProjectNotFoundException.class)
+    public ResponseEntity<ApiError> handleProjectNotFound(ProjectNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiError.of(HttpStatus.NOT_FOUND, exception.getMessage()));
+    }
+
+    @ExceptionHandler(WorkItemNotFoundException.class)
+    public ResponseEntity<ApiError> handleWorkItemNotFound(WorkItemNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiError.of(HttpStatus.NOT_FOUND, exception.getMessage()));
+    }
+
+    @ExceptionHandler(WorkflowDefinitionNotFoundException.class)
+    public ResponseEntity<ApiError> handleWorkflowDefinitionNotFound(WorkflowDefinitionNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiError.of(HttpStatus.NOT_FOUND, exception.getMessage()));
+    }
+
+    /**
+     * 400, no 409: decisión ya registrada en el Javadoc de
+     * {@link IllegalTransitionException} desde Phase 4 batch 1 ("se mapea a
+     * HTTP 400"), anterior a esta fase — se mantiene esa decisión existente
+     * en lugar de introducir 409 para no contradecir un diseño ya
+     * documentado (el spec no exige un código HTTP concreto para esta
+     * excepción).
+     */
+    @ExceptionHandler(IllegalTransitionException.class)
+    public ResponseEntity<ApiError> handleIllegalTransition(IllegalTransitionException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiError.of(HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

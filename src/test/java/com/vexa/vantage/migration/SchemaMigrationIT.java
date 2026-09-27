@@ -45,7 +45,7 @@ class SchemaMigrationIT extends PostgresTestContainerConfig {
 
         assertThat(applied)
                 .extracting(info -> info.getVersion().toString())
-                .contains("1", "2");
+                .contains("1", "2", "3");
         assertThat(applied)
                 .allSatisfy(info -> assertThat(info.getState().isFailed()).isFalse());
     }
@@ -69,5 +69,15 @@ class SchemaMigrationIT extends PostgresTestContainerConfig {
                 Integer.class);
 
         assertThat(count).isGreaterThanOrEqualTo(1);
+    }
+
+    @Test
+    void v3AddsTheNullableTshirtSizeColumnOnWorkItem() {
+        Integer count = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM information_schema.columns "
+                        + "WHERE table_schema = 'public' AND table_name = 'work_item' AND column_name = 'tshirt_size'",
+                Integer.class);
+
+        assertThat(count).isEqualTo(1);
     }
 }
